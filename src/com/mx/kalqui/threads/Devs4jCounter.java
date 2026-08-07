@@ -17,6 +17,7 @@ class Counter1 implements Runnable {
 
 	@Override
 	public void run() {
+		System.out.printf("Estado %s \n", Thread.currentThread().getState());
 		for (int i = valor; i >= 0; i--) {
 			System.out.printf("%s Valor %d \n", Thread.currentThread().getName(), i);
 			try {
@@ -35,12 +36,12 @@ public class Devs4jCounter {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		Thread hilo1 = new Thread(new Counter1(10), "Hilo 1");
+		System.out.printf("Estado %s \n", hilo1.getState());
 		hilo1.start();
-
-		Thread hilo2 = new Thread(new Counter1(20), "Hilo 2");
-		hilo2.start();
+		hilo1.join();
+		System.out.printf("Estado %s \n", hilo1.getState());
 	}
 
 }
